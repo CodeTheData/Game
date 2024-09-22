@@ -1,40 +1,51 @@
+import java.util.List;
+
 public class Unit {
     private String name;
     private int healthPoints;
     private int damage;
     private Item item;
-    private boolean isAlive = false;
+    private boolean isAlive;
 
-    public void info(){
-        System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent AA: %d\n", this.name, this.healthPoints,  this.damage);
+    public void getAndApplyItem(Item item){
+        this.item = item;
+        this.healthPoints += item.getHealth();
+        this.damage += item.getDamage();
     }
 
-    public boolean checkIsAlive(){
-        if(healthPoints < 0){
-            System.out.printf("%s вышел из боя!", getName());
-            isAlive = false;
-        } else {
-            System.out.printf("%s готов сражаться!", getName());
+    public void info(){
+        System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent DM: %d\n",
+                this.name, this.healthPoints, this.damage);
+    }
+
+    public boolean isAlive(){
+        if(healthPoints > 0){
             isAlive = true;
         }
         return isAlive;
     }
 
-    public void takeDamage(Unit enemy) {
-        System.out.printf("%s атакует %s и наносит %d урона!\n", name, enemy.getName(), damage);
-        enemy.loseHealth(damage);
+    public void attackUnit(Unit unit, List<Unit> members) {
+        System.out.printf("%s атаковал %s и наносит %d урона!\n", name, unit.getName(), damage);
+        unit.getUnitDamage(damage);
+        if(!unit.isAlive()){
+            members.remove(unit);
+            System.out.printf("%s выбыл из битвы и не может атаковать!\n", unit.getName());
+        }
     }
 
-    public void loseHealth(int amount){
-        this.healthPoints -= amount;
-        if(this.healthPoints < 0){
+    public void getUnitDamage(int damage){
+        this.setHealthPoints(getHealthPoints() - damage);
+        if(healthPoints < 0){
             this.healthPoints = 0;
         }
-        System.out.printf("%s получает %d урона. Осталось НР: %d\n", name, amount, healthPoints);
+
     }
 
-    public Unit(String name){
+    public Unit(String name, int healthPoints, int damage){
         this.name = name;
+        this.healthPoints = healthPoints;
+        this.damage = damage;
     }
 
     public String getName() {

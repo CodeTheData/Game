@@ -5,9 +5,9 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Unit player1 = new Unit("Artur");
-        Unit player2 = new Unit("Deonis");
-        Unit player3 = new Unit("Gerakle");
+        Unit player1 = new Unit("Artur", 100, 5);
+        Unit player2 = new Unit("Deonis", 110, 3);
+        Unit player3 = new Unit("Gerakle", 90, 7);
 
         Arena arena = new Arena();
         List<Unit> members = new ArrayList<>();
@@ -15,9 +15,15 @@ public class Main {
         members.add(player2);
         members.add(player3);
 
-        System.out.println(arena.open(members));
+        if(arena.open(members) == true)
+            System.out.println("Арена встречает бойцов! Да начнется битва!!!\n");
+        else
+            System.out.println("Не хватает участников для начала битвы!\n");
+
         for(Unit u : members){
             u.info();
         }
+
+        arena.fight(members);
     }
 }
