@@ -7,11 +7,11 @@ public class Unit {
     private Item item;
     private boolean isAlive;
 
-    public void getAndApplyItem(Item item){
-        this.item = item;
-        this.healthPoints += item.getHealth();
-        this.damage += item.getDamage();
-    }
+//    public void getAndApplyItem(Item item){
+//        this.item = item;
+//        this.healthPoints += item.getHealth();
+//        this.damage += item.getDamage();
+//    }
 
     public void info(){
         System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent DM: %d\n",
@@ -25,21 +25,17 @@ public class Unit {
         return isAlive;
     }
 
-    public void attackUnit(Unit unit, List<Unit> members) {
+    public void attackUnit(Unit unit) {
         System.out.printf("%s атаковал %s и наносит %d урона!\n", name, unit.getName(), damage);
         unit.getUnitDamage(damage);
-        if(!unit.isAlive()){
-            members.remove(unit);
-            System.out.printf("%s выбыл из битвы и не может атаковать!\n", unit.getName());
-        }
     }
 
     public void getUnitDamage(int damage){
-        this.setHealthPoints(getHealthPoints() - damage);
-        if(healthPoints < 0){
+        this.healthPoints -= damage;
+        if(this.healthPoints < 0){
             this.healthPoints = 0;
         }
-
+        System.out.printf("%s получает %d урона. Осталось НР: %d\n\n", name, damage, healthPoints);
     }
 
     public Unit(String name, int healthPoints, int damage){
