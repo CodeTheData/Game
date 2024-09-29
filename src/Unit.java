@@ -5,7 +5,7 @@ public class Unit {
     private int healthPoints;
     private int damage;
     private Item item;
-    private boolean isAlive;
+    private boolean isAlive = true;
 
 //    public void getAndApplyItem(Item item){
 //        this.item = item;
@@ -19,8 +19,8 @@ public class Unit {
     }
 
     public boolean isAlive(){
-        if(healthPoints > 0){
-            isAlive = true;
+        if(getHealthPoints() < 0 || getHealthPoints() == 0){
+            isAlive = false;
         }
         return isAlive;
     }
