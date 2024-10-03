@@ -39,7 +39,7 @@ public class Main {
         System.out.println();
 
         for(Unit u : members){
-            u.getAndApplyItem(u.getItem());
+            u.getAndApplyItem(u.getItem()); // тут времени не хватает в голове дойти до взятие айтема / он тут нулл, потому что в гет надо передать айтем, ещё не понял как
             u.info();
         }
 

@@ -42,11 +42,6 @@ public class Arena {
             int defenderIndex = random.nextInt(members.size());
             Unit defender = members.get(defenderIndex);
 
-//            int indexItem = random.nextInt(items.size());
-//
-//            attacker.getAndApplyItem(items.get(indexItem));
-//            defender.getAndApplyItem(items.get(indexItem));
-
             if(attackerIndex == defenderIndex) { //Если выпадет так что на этом моменте не пропустило на следующий if, а игрок был мертвым, то только через итеррацию будет выводится sout!
                 continue;
             } else if (!attacker.isAlive()) {
