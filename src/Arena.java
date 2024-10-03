@@ -1,22 +1,20 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Arena {
+
+    //можно сделать филды: вместимость арены, название арены, проверку кто хочет войти в арену?, а можно сделать арену для людей и для живтоных и совместку например?
+
     private List<Unit> members = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
-    private boolean isOpened = false;
+    private boolean isOpened;
+    Random random = new Random();
 
     public boolean open(List<Unit> members){
-        if(members.size() >= 3){
-            isOpened = true;
-        }
-        return isOpened;
+        return members.size() >= 3;
     }
 
-    public int countIsAlive(List<Unit> members){
+    public int countIsAliveUnits(List<Unit> members){
         int countAlive = 0;
         for (int i = 0; i < members.size(); i++) {
             if(members.get(i).isAlive()){
@@ -26,52 +24,30 @@ public class Arena {
         return countAlive;
     }
 
+    public void printWinner(List<Unit> members){
+        for(Unit u : members){
+            if(u.isAlive()){
+                System.out.println("Победителем становиться - " + u.getName() + "!!!");
+            }
+        }
+    }
+
     public void fight(List<Unit> members){
-        Random random = new Random();
+
         int countmembers = members.size();
 
-//        while(countmembers > 1){
-//            int attackerIndex = random.nextInt(members.size());
-//            Unit attacker = members.get(attackerIndex);
-//
-//            if(attacker.getHealthPoints() == 0){
-//                members.remove(attacker);
-//                countmembers--;
-//                System.out.printf("%s выбывает из битвы и не может атаковать!\n", attacker.getName());
-//                System.out.println();
-//                System.out.println(members);
-//            }
-//
-//            int defenderIndex;
-//            defenderIndex = random.nextInt(members.size());
-//            Unit defender = members.get(defenderIndex);
-////            do{
-////
-////            } while(defenderIndex == attackerIndex || !members.get(defenderIndex).isAlive());
-////            Unit defender = members.get(defenderIndex);
-//
-//            if(defender.getHealthPoints() == 0){
-////                attacker.getAndApplyItem(defender.getItem());
-////                defender.setItem(null);
-//                members.remove(defender);
-//                countmembers--;
-//                System.out.printf("%s выбывает из битвы и не может защищаться!\n", defender.getName());
-//                System.out.println();
-//            }
-//
-////            if(countmembers > 1){
-//                attacker.attackUnit(defender);
-////            }
-//
-//
-//        }
-        while(countIsAlive(members) > 1){
+        while(countIsAliveUnits(members) > 1){
             int attackerIndex = random.nextInt(members.size());
             Unit attacker = members.get(attackerIndex);
             int defenderIndex = random.nextInt(members.size());
             Unit defender = members.get(defenderIndex);
 
-            if(attackerIndex == defenderIndex) {
+//            int indexItem = random.nextInt(items.size());
+//
+//            attacker.getAndApplyItem(items.get(indexItem));
+//            defender.getAndApplyItem(items.get(indexItem));
+
+            if(attackerIndex == defenderIndex) { //Если выпадет так что на этом моменте не пропустило на следующий if, а игрок был мертвым, то только через итеррацию будет выводится sout!
                 continue;
             } else if (!attacker.isAlive()) {
                 members.remove(attacker);
@@ -84,25 +60,9 @@ public class Arena {
                 System.out.println(defender.getName() + " выбывает из битвы!\n");
                 continue;
             }
-
-//            if(attacker.getHealthPoints() < 0 || attacker.getHealthPoints() == 0){
-//                members.remove(attacker);
-//                countmembers--;
-//            }
-//
-//            if(defender.getHealthPoints() < 0 || defender.getHealthPoints() == 0){
-//                members.remove(defender);
-//                countmembers--;
-//                System.out.println(defender.getName() + " выбывает из битвы!");
-//            }
             attacker.attackUnit(defender);
         }
-
-        for(Unit u : members){
-            if(u.isAlive()){
-                System.out.println("Победителем становиться - " + u.getName() + "!!!");
-            }
-        }
+        printWinner(members);
     }
     
 }

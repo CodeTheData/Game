@@ -1,17 +1,25 @@
 import java.util.List;
+import java.util.Random;
 
 public class Unit {
     private String name;
     private int healthPoints;
     private int damage;
     private Item item;
-    private boolean isAlive = true;
+    private boolean isAlive;
 
-//    public void getAndApplyItem(Item item){
-//        this.item = item;
-//        this.healthPoints += item.getHealth();
-//        this.damage += item.getDamage();
-//    }
+    Random random = new Random();
+
+    public void getAndApplyItem(Item item){
+        this.item = item;
+
+        if(item.isActive()){
+            this.healthPoints += item.getUpHp();
+            this.damage += item.getUpDmg();
+        } else {
+            setItem(null);
+        }
+    }
 
     public void info(){
         System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent DM: %d\n",
@@ -19,10 +27,7 @@ public class Unit {
     }
 
     public boolean isAlive(){
-        if(getHealthPoints() < 0 || getHealthPoints() == 0){
-            isAlive = false;
-        }
-        return isAlive;
+        return getHealthPoints() > 0;
     }
 
     public void attackUnit(Unit unit) {
