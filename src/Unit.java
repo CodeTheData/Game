@@ -10,6 +10,12 @@ public class Unit {
 
     Random random = new Random();
 
+    public Item equipment(List<Item> items){
+        int indexItem = random.nextInt(items.size());
+        Item item = items.get(indexItem);
+        return item;
+    }
+
     public void getAndApplyItem(Item item){
         this.item = item;
 

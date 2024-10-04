@@ -27,21 +27,25 @@ public class Main {
         items.add(item3);
 
 
-        if(arena.open(members) == true)
+        if (arena.open(members) == true) {
             System.out.println("\nАрена встречает бойцов! Да начнется битва!!!\n");
-        else
-            System.out.println("\nНе хватает участников для начала битвы!\n");
+            for (Unit unit : members) {
+                unit.info();
+                unit.getAndApplyItem(unit.equipment(items));
+                System.out.println("Баффы получены!");
+                unit.info();
+            }
 
-        System.out.print("В инвентаре арены лежат следующее снаряжение: ");
+        } else {
+            System.out.println("\nНе хватает участников для начала битвы!\n");
+        }
+        System.out.print("В инвентаре арены лежит следующее снаряжение: ");
         for(Item item : items){
             item.infoOfItem();
         }
-        System.out.println();
 
-        for(Unit u : members){
-            u.getAndApplyItem(u.getItem()); // тут времени не хватает в голове дойти до взятие айтема / он тут нулл, потому что в гет надо передать айтем, ещё не понял как
-            u.info();
-        }
+        System.out.println("\n");
+
 
         arena.fight(members);
 

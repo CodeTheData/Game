@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Item {
     private int upHp;
     private int upDmg;
     private String name;
     private List<Item> items;
+    Random random = new Random();
 
     public Item(String name, int buffHp, int buffDmg){
         this.name = name;
