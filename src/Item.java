@@ -19,7 +19,7 @@ public class Item {
         return this.upDmg != 0 && this.upHp != 0;
     }
 
-    public void infoOfItem(){
+    public void printItemInfo(){
         System.out.print(this.name + " / ");
     }
 

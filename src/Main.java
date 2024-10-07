@@ -26,28 +26,7 @@ public class Main {
         items.add(item2);
         items.add(item3);
 
-
-        if (arena.open(members) == true) {
-            System.out.println("\nАрена встречает бойцов! Да начнется битва!!!\n");
-            for (Unit unit : members) {
-                unit.info();
-                unit.getAndApplyItem(unit.equipment(items));
-                System.out.println("Баффы получены!");
-                unit.info();
-            }
-
-        } else {
-            System.out.println("\nНе хватает участников для начала битвы!\n");
-        }
-        System.out.print("В инвентаре арены лежит следующее снаряжение: ");
-        for(Item item : items){
-            item.infoOfItem();
-        }
-
-        System.out.println("\n");
-
-
-        arena.fight(members);
+        arena.start(arena, members, items);
 
     }
 }

@@ -10,7 +10,7 @@ public class Unit {
 
     Random random = new Random();
 
-    public Item equipment(List<Item> items){
+    public Item chooseRandomItem(List<Item> items){
         int indexItem = random.nextInt(items.size());
         Item item = items.get(indexItem);
         return item;
@@ -27,9 +27,14 @@ public class Unit {
         }
     }
 
-    public void info(){
-        System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent DM: %d\n",
+    public void infoSpecs(){
+        System.out.printf("Unit %s enter to Arena!\tCurrent HP: %d\tCurrent DM: %d\n",
                 this.name, this.healthPoints, this.damage);
+    }
+
+    public void infoCurrentSpecs(){
+        System.out.printf("Изменения вступили в силу, характеристики героя улучшены!\nCurrent HP: %d\tCurrent DM: %d\n",
+                this.healthPoints, this.damage);
     }
 
     public boolean isAlive(){
@@ -37,7 +42,7 @@ public class Unit {
     }
 
     public void attackUnit(Unit unit) {
-        System.out.printf("%s атаковал %s и наносит %d урона!\n", name, unit.getName(), damage);
+        System.out.printf("%s атакует %s и наносит %d урона\n", name, unit.getName(), damage);
         unit.getUnitDamage(damage);
     }
 
