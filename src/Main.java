@@ -8,9 +8,9 @@ public class Main {
 
         Arena arena = new Arena();
 
-        Unit player1 = new Unit("Artur", 100, 5);
-        Unit player2 = new Unit("Deonis", 80, 6);
-        Unit player3 = new Unit("Gerakle", 110, 9);
+        Unit player1 = new Unit("Artur", 115, 7, 1);
+        Unit player2 = new Unit("Deonis", 125, 9, 1);
+        Unit player3 = new Unit("Gerakle", 110, 11, 1);
 
         List<Unit> members = new ArrayList<>();
         members.add(player1);
@@ -26,7 +26,11 @@ public class Main {
         items.add(item2);
         items.add(item3);
 
-        arena.start(arena, members, items);
+        try {
+            arena.start(arena, members, items);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

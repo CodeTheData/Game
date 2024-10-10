@@ -7,8 +7,14 @@ public class Unit {
     private int damage;
     private Item item;
     private boolean isAlive;
+    private int level;
+    private int experiance;
 
     Random random = new Random();
+
+    public void levelUp(Unit mainPlayer){
+
+    }
 
     public Item chooseRandomItem(List<Item> items){
         int indexItem = random.nextInt(items.size());
@@ -28,12 +34,12 @@ public class Unit {
     }
 
     public void infoSpecs(){
-        System.out.printf("Unit %s enter to Arena!\tCurrent HP: %d\tCurrent DM: %d\n",
-                this.name, this.healthPoints, this.damage);
+        System.out.printf("Unit %s enter to Arena! Current HP: %d Current DM: %d Current Lvl: %d\n",
+                this.name, this.healthPoints, this.damage, this.getLevel());
     }
 
     public void infoCurrentSpecs(){
-        System.out.printf("Изменения вступили в силу, характеристики героя улучшены!\nCurrent HP: %d\tCurrent DM: %d\n",
+        System.out.printf("Изменения вступили в силу, характеристики героя улучшены!\nCurrent HP: %d Current DM: %d\n",
                 this.healthPoints, this.damage);
     }
 
@@ -54,10 +60,11 @@ public class Unit {
         System.out.printf("%s получает %d урона. Осталось НР: %d\n\n", name, damage, healthPoints);
     }
 
-    public Unit(String name, int healthPoints, int damage){
+    public Unit(String name, int healthPoints, int damage, int level){
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
+        this.level = level;
     }
 
     public String getName() {
@@ -90,6 +97,22 @@ public class Unit {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
+    public void setLevel(int level){
+        this.level = level;
+    }
+
+    public int getExperiance(){
+        return experiance;
+    }
+
+    public void setExperiance(){
+        this.experiance = experiance;
     }
 
 
