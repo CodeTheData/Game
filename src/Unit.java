@@ -7,19 +7,13 @@ public class Unit {
     private int damage;
     private Item item;
     private boolean isAlive;
-    private int level;
+    private int level = 1;
     private int experiance;
 
     Random random = new Random();
 
-    public void levelUp(Unit mainPlayer){
-
-    }
-
-    public Item chooseRandomItem(List<Item> items){
-        int indexItem = random.nextInt(items.size());
-        Item item = items.get(indexItem);
-        return item;
+    public void levelUp(){
+        level++;
     }
 
     public void getAndApplyItem(Item item){
@@ -33,12 +27,12 @@ public class Unit {
         }
     }
 
-    public void infoSpecs(){
+    public void infoAboutUnit(){
         System.out.printf("Unit %s enter to Arena! Current HP: %d Current DM: %d Current Lvl: %d\n",
                 this.name, this.healthPoints, this.damage, this.getLevel());
     }
 
-    public void infoCurrentSpecs(){
+    public void infoChangeAboutUnit(){
         System.out.printf("Изменения вступили в силу, характеристики героя улучшены!\nCurrent HP: %d Current DM: %d\n",
                 this.healthPoints, this.damage);
     }
@@ -114,6 +108,5 @@ public class Unit {
     public void setExperiance(){
         this.experiance = experiance;
     }
-
 
 }
