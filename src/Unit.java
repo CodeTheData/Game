@@ -8,12 +8,15 @@ public class Unit {
     private Item item;
     private boolean isAlive;
     private int level = 1;
-    private int experiance;
+    private int experiance; // за убийство врага юнит получает 30 опыта, для получения лвл ап необходимо 90!
+    //когда мой герой убивает врага он получает опыт и переход по аренам , где враги сильнее
+    public boolean isWinner;
 
     Random random = new Random();
 
     public void levelUp(){
-        level++;
+        this.level += 1;
+
     }
 
     public void getAndApplyItem(Item item){

@@ -11,6 +11,10 @@ public class HeroSelecter {
         Unit mainPlayer = members.get(indexHero);
 
         System.out.println("Основной герой: " + mainPlayer.getName());
+
+
+
+
         //тут по хорошему сделать исключение nullPointerException или проверку выхода за рамки листа(так думаю)
 //        switch (indexHero){
 //            case 0:
