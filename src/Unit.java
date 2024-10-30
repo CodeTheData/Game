@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 public class Unit {
     private String name;
@@ -6,27 +7,42 @@ public class Unit {
     private int damage;
     private Item item;
     private boolean isAlive;
+    private int level = 1;
+    private int experiance;
 
-//    public void getAndApplyItem(Item item){
-//        this.item = item;
-//        this.healthPoints += item.getHealth();
-//        this.damage += item.getDamage();
-//    }
+    Random random = new Random();
 
-    public void info(){
-        System.out.printf("Unit %s enter to Arena!\nCurrent HP: %d\nCurrent DM: %d\n",
-                this.name, this.healthPoints, this.damage);
+    public void levelUp(){
+        level++;
+    }
+
+    public void getAndApplyItem(Item item){
+        this.item = item;
+
+        if(item.isActive()){
+            this.healthPoints += item.getUpHp();
+            this.damage += item.getUpDmg();
+        } else {
+            setItem(null);
+        }
+    }
+
+    public void infoAboutUnit(){
+        System.out.printf("Unit %s enter to Arena! Current HP: %d Current DM: %d Current Lvl: %d\n",
+                this.name, this.healthPoints, this.damage, this.getLevel());
+    }
+
+    public void infoChangeAboutUnit(){
+        System.out.printf("Изменения вступили в силу, характеристики героя улучшены!\nCurrent HP: %d Current DM: %d\n",
+                this.healthPoints, this.damage);
     }
 
     public boolean isAlive(){
-        if(healthPoints > 0){
-            isAlive = true;
-        }
-        return isAlive;
+        return getHealthPoints() > 0;
     }
 
     public void attackUnit(Unit unit) {
-        System.out.printf("%s атаковал %s и наносит %d урона!\n", name, unit.getName(), damage);
+        System.out.printf("%s атакует %s и наносит %d урона\n", name, unit.getName(), damage);
         unit.getUnitDamage(damage);
     }
 
@@ -38,10 +54,11 @@ public class Unit {
         System.out.printf("%s получает %d урона. Осталось НР: %d\n\n", name, damage, healthPoints);
     }
 
-    public Unit(String name, int healthPoints, int damage){
+    public Unit(String name, int healthPoints, int damage, int level){
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
+        this.level = level;
     }
 
     public String getName() {
@@ -76,5 +93,20 @@ public class Unit {
         this.item = item;
     }
 
+    public int getLevel(){
+        return level;
+    }
+
+    public void setLevel(int level){
+        this.level = level;
+    }
+
+    public int getExperiance(){
+        return experiance;
+    }
+
+    public void setExperiance(){
+        this.experiance = experiance;
+    }
 
 }
