@@ -9,6 +9,7 @@ public class Unit {
     private boolean isAlive;
     private int level = 1;
     private int experiance;
+    public boolean isWinner;
 
     Random random = new Random();
 
