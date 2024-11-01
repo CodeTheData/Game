@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Random;
 
 public class Unit {
@@ -9,7 +8,7 @@ public class Unit {
     private boolean isAlive;
     private int level = 1;
     private int experiance;
-    public boolean isWinner;
+    private boolean isWinner;
 
     Random random = new Random();
 
@@ -102,11 +101,19 @@ public class Unit {
         this.level = level;
     }
 
+    public boolean getIsWinner(){
+        return isWinner;
+    }
+
+    public void setIsWinner(boolean isWinner){
+        this.isWinner = isWinner;
+    }
+
     public int getExperiance(){
         return experiance;
     }
 
-    public void setExperiance(){
+    public void setExperiance(int experiance){
         this.experiance = experiance;
     }
 

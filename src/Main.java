@@ -8,26 +8,51 @@ public class Main {
 
         Arena arena = new Arena();
 
-        Unit player1 = new Unit("Artur", 115, 7, 1);
-        Unit player2 = new Unit("Deonis", 125, 9, 1);
-        Unit player3 = new Unit("Gerakle", 110, 11, 1);
+        List<Unit> easyMembers = new ArrayList<>();
 
-        List<Unit> members = new ArrayList<>();
-        members.add(player1);
-        members.add(player2);
-        members.add(player3);
+        Unit player1 = new Unit("Кратос", 150, 15, 1);
+        Unit player2 = new Unit("Посейдон", 100, 9, 1);
+        Unit player3 = new Unit("Гермес", 100, 11, 1);
 
-        Item item1 = new Item("Перчатки легендарного бойца", 10, 3);
-        Item item2 = new Item("Ботинки ниндзя", 3, 5);
-        Item item3 = new Item("Кольцо силы", 15, 2);
+        easyMembers.add(player1);
+        easyMembers.add(player2);
+        easyMembers.add(player3);
+
+        List<Unit> mediumMembers = new ArrayList<>();
+
+        Unit player11 = new Unit("Гелиос", 170, 15, 1);
+        Unit player22 = new Unit("Геркулес", 180, 17, 1);
+
+        mediumMembers.add(player11);
+        mediumMembers.add(player22);
+
+        List<Unit> hardMembers = new ArrayList<>();
+
+        Unit player111 = new Unit("Аид", 250, 22, 1);
+        Unit player222 = new Unit("Зевс", 260, 20, 1);
+
+        hardMembers.add(player111);
+        hardMembers.add(player222);
+
+        Item item1 = new Item("Трезубец",5);
+        Item item2 = new Item("Крылатые ботинки", 2, 2);
+        Item item3 = new Item(6,"Световая повязка");
+        Item item4 = new Item("Дубина", 6);
+        Item item5 = new Item("Боевой топор", 3, 8);
+        Item item6 = new Item("Молния", 10);
 
         List<Item> items = new ArrayList<>();
         items.add(item1);
         items.add(item2);
         items.add(item3);
+        items.add(item4);
+        items.add(item5);
+        items.add(item6);
 
         try {
-            arena.start(arena, members, items);
+            arena.start(arena, easyMembers, items);
+            arena.getResultFight(easyMembers, mediumMembers, items);
+            arena.getResultFight(mediumMembers, hardMembers, items);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -1,3 +1,4 @@
+import java.sql.ClientInfoStatus;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,19 +16,20 @@ public class Arena {
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
-    public void getResultFight(List<Unit> mainPlayers){
-        if(mainPlayers.get(selecter.indexHero).isWinner){
-            mainPlayers.get(selecter.indexHero).levelUp();
+    public void getResultFight(List<Unit> currentPlayers, List<Unit> newPlayers, List<Item> items) throws InterruptedException {
+        if(currentPlayers.get(selecter.getIndexHero()).getIsWinner()){
+            currentPlayers.get(selecter.getIndexHero()).levelUp();
             System.out.printf("%s поздравляем вас с победой на Арене! Уровень героя повысился и стал равен - %d! " +
-                    "\nИдет переход на новую Арену...", mainPlayers.get(selecter.indexHero).getName(), mainPlayers.get(selecter.indexHero).getLevel());
-
+                    "\nИдет переход на новую Арену...\n\n", currentPlayers.get(selecter.getIndexHero()).getName(), currentPlayers.get(selecter.getIndexHero()).getLevel());
             //новое хранилище листов врагов, перенести все листы врагов из мейна
             //мной подготовленный лист с врагами второй арены и добавляю моего героя в этот лист и вызываю метод файт
-
+            newPlayers.add(currentPlayers.get(selecter.getIndexHero()));
+            getInfoAboutPlayers(newPlayers, items);
+            fight(newPlayers);
         } else {
-            mainPlayers.get(indexPlayer).levelUp();
+            currentPlayers.get(indexPlayer).levelUp();
             System.out.printf("В этот раз победу одержал %s его уровень повысился и стал равен - %d, испытай удачу в следующий раз! \n",
-                    mainPlayers.get(indexWinner).getName(), mainPlayers.get(indexPlayer).getLevel());
+                    currentPlayers.get(indexWinner).getName(), currentPlayers.get(indexPlayer).getLevel());
         }
     }
 
@@ -74,7 +76,6 @@ public class Arena {
             System.out.println();
             Thread.sleep(1000);
         }
-
     }
 
     public int countIsAliveUnits(List<Unit> members){
@@ -88,6 +89,8 @@ public class Arena {
     }
 
     public void fight(List<Unit> members) throws InterruptedException {
+
+//        getInfoAboutPlayers(members, );
 
         while(countIsAliveUnits(members) > 1){
             int attackerIndex = random.nextInt(members.size());
@@ -113,7 +116,7 @@ public class Arena {
         }
 
         System.out.println("Победителем становится: " + members.get(indexWinner).getName() + " !!!\n");
-        members.get(indexWinner).isWinner = true;
+        members.get(indexWinner).setIsWinner(true);
 
     }
 
