@@ -1,9 +1,11 @@
 import java.util.Random;
 
 public class Item {
+    private int id;
+    private String name;
     private int upHp;
     private int upDmg;
-    private String name;
+    private int price;
     Random random = new Random();
 
     public boolean isActive(){
@@ -14,20 +16,26 @@ public class Item {
         System.out.print(this.name + " / ");
     }
 
-    public Item(String name, int buffHp, int buffDmg){
+    public Item(int id, String name, int buffHp, int buffDmg, int price){
+        this.id = id;
         this.name = name;
         this.upHp = buffHp;
         this.upDmg = buffDmg;
+        this.price = price;
     }
 
-    public Item(String name, int buffDmg){
+    public Item(int id, String name, int buffDmg, int price){
+        this.id = id;
         this.name = name;
         this.upDmg = buffDmg;
+        this.price = price;
     }
 
-    public Item(int buffHp, String name){
+    public Item(int id, int buffHp, String name, int price){
+        this.id = id;
         this.name = name;
         this.upHp = buffHp;
+        this.price = price;
     }
 
     public int getUpHp() {
@@ -52,6 +60,22 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPrice(){
+        return price;
+    }
+
+    public void setPrice(int price){
+        this.price = price;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
 }

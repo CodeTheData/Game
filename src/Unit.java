@@ -2,15 +2,19 @@ import java.util.Random;
 
 public class Unit {
     private String name;
+    private int id;
     private int healthPoints;
     private int damage;
     private Item item;
     private boolean isAlive;
     private int level = 1;
-    private int experiance;
+    private int experianceHero;
     private boolean isWinner;
 
     Random random = new Random();
+
+    public void experianceUp(){
+    }
 
     public void levelUp(){
         level++;
@@ -54,11 +58,13 @@ public class Unit {
         System.out.printf("%s получает %d урона. Осталось НР: %d\n\n", name, damage, healthPoints);
     }
 
-    public Unit(String name, int healthPoints, int damage, int level){
+    public Unit(int id, String name, int healthPoints, int damage, int level, int experianceHero){
+        this.id = id;
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
         this.level = level;
+        this.experianceHero = experianceHero;
     }
 
     public String getName() {
@@ -109,12 +115,19 @@ public class Unit {
         this.isWinner = isWinner;
     }
 
-    public int getExperiance(){
-        return experiance;
+    public int getExperianceHero(){
+        return experianceHero;
     }
 
-    public void setExperiance(int experiance){
-        this.experiance = experiance;
+    public void setExperianceHero(int experianceHero){
+        this.experianceHero = experianceHero;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -1,4 +1,3 @@
-import java.sql.ClientInfoStatus;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,48 +11,54 @@ public class Arena {
     int indexWinner;
     int indexPlayer;
     HeroSelecter selecter = new HeroSelecter();
+    UnitsPrison UnitsPrison = new UnitsPrison();
 
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
-    public void getResultFight(List<Unit> currentPlayers, List<Unit> newPlayers, List<Item> items) throws InterruptedException {
-        if(currentPlayers.get(selecter.getIndexHero()).getIsWinner()){
-            currentPlayers.get(selecter.getIndexHero()).levelUp();
+//    public void switchToArena(List<Unit> list){
+//        if(list.get(selecter.getIndexHero()).getExperianceHero() == 50){
+//            fight();
+//        }
+//    }
+
+    public void getResultFight(List<Unit> list) throws InterruptedException {
+        if(indexWinner == selecter.getIndexHero()){
+            list.get(selecter.getIndexHero()).levelUp();
             System.out.printf("%s поздравляем вас с победой на Арене! Уровень героя повысился и стал равен - %d! " +
-                    "\nИдет переход на новую Арену...\n\n", currentPlayers.get(selecter.getIndexHero()).getName(), currentPlayers.get(selecter.getIndexHero()).getLevel());
-            //новое хранилище листов врагов, перенести все листы врагов из мейна
-            //мной подготовленный лист с врагами второй арены и добавляю моего героя в этот лист и вызываю метод файт
-            newPlayers.add(currentPlayers.get(selecter.getIndexHero()));
-            getInfoAboutPlayers(newPlayers, items);
-            fight(newPlayers);
+                    "\nИдет переход на новую Арену...\n\n", list.get(selecter.getIndexHero()).getName(), list.get(selecter.getIndexHero()).getLevel());
         } else {
-            currentPlayers.get(indexPlayer).levelUp();
+            list.get(selecter.getIndexHero()).levelUp();
             System.out.printf("В этот раз победу одержал %s его уровень повысился и стал равен - %d, испытай удачу в следующий раз! \n",
-                    currentPlayers.get(indexWinner).getName(), currentPlayers.get(indexPlayer).getLevel());
+                    list.get(indexWinner).getName(), list.get(indexWinner).getLevel());
         }
     }
 
-    public void start(Arena arena, List<Unit> members, List<Item> items) throws InterruptedException {
+    public void start(List<List<Unit>> listOfList, List<Item> items) throws InterruptedException {
 
-        selecter.select(members);
+        selecter.select(listOfList.get(0));
 
-        if (arena.open(members) != true) {
-            System.out.println("\nНе хватает участников для начала битвы!\n");
-            return;
-        } else {
-            System.out.println("\nАрена встречает бойцов! Да начнется битва!!!\n");
+        for (int i = 0; i < listOfList.size(); i++) {
+            if (open(listOfList.get(i)) != true) {
+                System.out.println("\nНе хватает участников для начала битвы!\n");
+                return;
+            } else {
+                System.out.println("\nАрена встречает бойцов! Да начнется битва!!!\n");
+            }
+
+            System.out.print("В инвентаре арены лежит следующее снаряжение: ");
+
+            for(Item item : items){
+                item.printItemInfo();
+            }
+            System.out.println("\n");
+
+            getInfoAboutPlayers(listOfList.get(i), items);
+
+            fight(listOfList.get(i));
+
+            getResultFight(listOfList.get(i));
         }
-
-        System.out.print("В инвентаре арены лежит следующее снаряжение: ");
-
-        for(Item item : items){
-            item.printItemInfo();
-        }
-        System.out.println("\n");
-
-        getInfoAboutPlayers(members, items);
-
-        arena.fight(members);
 
     }
 
@@ -90,19 +95,16 @@ public class Arena {
 
     public void fight(List<Unit> members) throws InterruptedException {
 
-//        getInfoAboutPlayers(members, );
-
         while(countIsAliveUnits(members) > 1){
             int attackerIndex = random.nextInt(members.size());
             Unit attacker = members.get(attackerIndex);
             int defenderIndex = random.nextInt(members.size());
             Unit defender = members.get(defenderIndex);
 
-            indexWinner = attackerIndex;
-
-            if(attackerIndex == defenderIndex) { //Если выпадет так что на этом моменте не пропустило на следующий if, а игрок был мертвым, то только через итеррацию будет выводится sout!
+            if(attackerIndex == defenderIndex) {
                 continue;
             } else if (!attacker.isAlive()) {
+                members.get(defenderIndex).experianceUp();
                 System.out.println(attacker.getName() + " выбывает из битвы!\n");
                 members.remove(attacker);
                 continue;
@@ -111,12 +113,14 @@ public class Arena {
                 members.remove(defender);
                 continue;
             }
+
+            indexWinner = attackerIndex;
+
             attacker.attackUnit(defender);
             Thread.sleep(1000);
         }
 
         System.out.println("Победителем становится: " + members.get(indexWinner).getName() + " !!!\n");
-        members.get(indexWinner).setIsWinner(true);
 
     }
 
