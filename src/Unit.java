@@ -3,12 +3,12 @@ import java.util.Random;
 public class Unit {
     private String name;
     private int id;
+    private int level = 1;
+    private int experiance;
     private int healthPoints;
     private int damage;
     private Item item;
     private boolean isAlive;
-    private int level = 1;
-    private int experianceHero;
     private boolean isWinner;
 
     Random random = new Random();
@@ -21,8 +21,6 @@ public class Unit {
     }
 
     public void getAndApplyItem(Item item){
-        this.item = item;
-
         if(item.isActive()){
             this.healthPoints += item.getUpHp();
             this.damage += item.getUpDmg();
@@ -58,13 +56,17 @@ public class Unit {
         System.out.printf("%s получает %d урона. Осталось НР: %d\n\n", name, damage, healthPoints);
     }
 
-    public Unit(int id, String name, int healthPoints, int damage, int level, int experianceHero){
+    public Unit(int id, String name, int healthPoints, int damage, int level, int experiance){
         this.id = id;
         this.name = name;
         this.healthPoints = healthPoints;
         this.damage = damage;
         this.level = level;
-        this.experianceHero = experianceHero;
+        this.experiance = experiance;
+    }
+
+    public Unit(){
+
     }
 
     public String getName() {
@@ -91,14 +93,6 @@ public class Unit {
         this.damage = damage;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
     public int getLevel(){
         return level;
     }
@@ -107,27 +101,27 @@ public class Unit {
         this.level = level;
     }
 
-    public boolean getIsWinner(){
-        return isWinner;
-    }
-
-    public void setIsWinner(boolean isWinner){
-        this.isWinner = isWinner;
-    }
-
-    public int getExperianceHero(){
-        return experianceHero;
-    }
-
-    public void setExperianceHero(int experianceHero){
-        this.experianceHero = experianceHero;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean getIsWinner(){
+        return isWinner;
+    }
+
+    public int getExperianceHero(){
+        return experiance;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

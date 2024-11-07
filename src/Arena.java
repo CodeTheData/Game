@@ -1,45 +1,48 @@
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Arena {
-
-    //можно сделать филды: вместимость арены, название арены, проверку кто хочет войти в арену?, а можно сделать арену для людей и для живтоных и совместку например?
 
     private boolean isArenaOpened;
     private boolean isHeroWin;
     int indexWinner;
     int indexPlayer;
-    HeroSelecter selecter = new HeroSelecter();
-    UnitsPrison UnitsPrison = new UnitsPrison();
+    List<Item> items;
 
     Random random = new Random();
-    Scanner scanner = new Scanner(System.in);
+    ItemsTrader itemsTrader = new ItemsTrader();
+    HeroSelecter heroSelecter = new HeroSelecter();
 
-//    public void switchToArena(List<Unit> list){
-//        if(list.get(selecter.getIndexHero()).getExperianceHero() == 50){
-//            fight();
-//        }
-//    }
 
     public void getResultFight(List<Unit> list) throws InterruptedException {
-        if(indexWinner == selecter.getIndexHero()){
-            list.get(selecter.getIndexHero()).levelUp();
+        if(list.get(indexWinner).getId() == list.get(heroSelecter.getIndexHero()).getId()){
+            list.get(heroSelecter.getIndexHero()).levelUp();
             System.out.printf("%s поздравляем вас с победой на Арене! Уровень героя повысился и стал равен - %d! " +
-                    "\nИдет переход на новую Арену...\n\n", list.get(selecter.getIndexHero()).getName(), list.get(selecter.getIndexHero()).getLevel());
+                    "\nИдет переход на новую Арену...\n\n", list.get(heroSelecter.getIndexHero()).getName(), list.get(heroSelecter.getIndexHero()).getLevel());
         } else {
-            list.get(selecter.getIndexHero()).levelUp();
+            list.get(heroSelecter.getIndexHero()).levelUp();
             System.out.printf("В этот раз победу одержал %s его уровень повысился и стал равен - %d, испытай удачу в следующий раз! \n",
                     list.get(indexWinner).getName(), list.get(indexWinner).getLevel());
         }
     }
 
-    public void start(List<List<Unit>> listOfList, List<Item> items) throws InterruptedException {
+    public void giveInfoAboutPlayers(List<Unit> members) throws InterruptedException {
+        for (Unit unit : members) {
+            unit.infoAboutUnit();
+            unit.getAndApplyItem(itemsTrader.giveRandomItem());
+            System.out.printf("Игрок получил новый предмет - %s!\n", unit.getItem().getName());
+            unit.infoChangeAboutUnit();
+            System.out.println();
+            Thread.sleep(1000);
+        }
+    }
 
-        selecter.select(listOfList.get(0));
+    public void start(List<List<Unit>> allMembers, List<Item> items) throws InterruptedException {
 
-        for (int i = 0; i < listOfList.size(); i++) {
-            if (open(listOfList.get(i)) != true) {
+        heroSelecter.select(allMembers.get(0));
+
+        for (int i = 0; i < allMembers.size(); i++) {
+            if (open(allMembers.get(i)) != true) {
                 System.out.println("\nНе хватает участников для начала битвы!\n");
                 return;
             } else {
@@ -53,35 +56,19 @@ public class Arena {
             }
             System.out.println("\n");
 
-            getInfoAboutPlayers(listOfList.get(i), items);
+            giveInfoAboutPlayers(allMembers.get(i));
 
-            fight(listOfList.get(i));
+            fight(allMembers.get(i));
 
-            getResultFight(listOfList.get(i));
+            getResultFight(allMembers.get(i));
         }
 
-    }
-
-    public Item chooseRandomItem(List<Item> items){
-        int indexItem = random.nextInt(items.size());
-        Item item = items.get(indexItem);
-        return item;
     }
 
     public boolean open(List<Unit> members){
         return members.size() >= 3;
     }
 
-    public void getInfoAboutPlayers(List<Unit> members, List<Item> items) throws InterruptedException {
-        for (Unit unit : members) {
-            unit.infoAboutUnit();
-            unit.getAndApplyItem(chooseRandomItem(items));
-            System.out.printf("Получен новый предмет - %s!\n", unit.getItem().getName());
-            unit.infoChangeAboutUnit();
-            System.out.println();
-            Thread.sleep(1000);
-        }
-    }
 
     public int countIsAliveUnits(List<Unit> members){
         int countAlive = 0;

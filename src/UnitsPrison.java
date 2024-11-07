@@ -3,22 +3,43 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UnitsPrison {
-    Scanner scanner = new Scanner(System.in);
+    List<Unit> easyMembers;
+    List<Unit> mediumMembers;
+    List<Unit> hardMembers;
 
-    List <List<Unit>> listOfLists;
-    private int indexArena;
+    public Unit createUnit(int id, String name, int healthPoints, int damage, int experiance){
+        return new Unit(id, name, healthPoints, damage, 1,  0);
+    }
 
     public UnitsPrison(){
-        listOfLists = new ArrayList<List<Unit>>();
+        easyMembers = new ArrayList<>();
+        mediumMembers = new ArrayList<>();
+        hardMembers = new ArrayList<>();
+        initializeUnit();
     }
 
-    public void chooseList(){
-        System.out.println("Введите номер арены, в которую хотите войти: ");
-        indexArena = scanner.nextInt();
-        System.out.printf("Вы вошли в Арену, как будете готовы вступайте в бой.");
+    public void initializeUnit(){
+        easyMembers.add(createUnit(1, "Боец", 120, 15,  0));
+        easyMembers.add(createUnit(2, "Враг1", 15, 9,  25));
+        easyMembers.add(createUnit(3, "Враг2", 15, 11,  25));
+
+        mediumMembers.add(createUnit(4,"Враг11", 170, 15,  50));
+        mediumMembers.add(createUnit(5,"Враг22", 180, 17,  50));
+        mediumMembers.add(createUnit(6,"Враг33", 175, 18,  50));
+
+        hardMembers.add(createUnit(7, "Враг111", 250, 22,  100));
+        hardMembers.add(createUnit(8, "Враг222", 260, 20,  100));
     }
 
-    public List<List<Unit>> getListOfLists(){
-        return listOfLists;
+    public List<Unit> getEasyMembers() {
+        return easyMembers;
+    }
+
+    public List<List<Unit>> getAllMembers(){
+        List<List<Unit>> allMembers = new ArrayList<>();
+        allMembers.add(easyMembers);
+        allMembers.add(mediumMembers);
+        allMembers.add(hardMembers);
+        return allMembers;
     }
 }

@@ -24,20 +24,6 @@ public class Item {
         this.price = price;
     }
 
-    public Item(int id, String name, int buffDmg, int price){
-        this.id = id;
-        this.name = name;
-        this.upDmg = buffDmg;
-        this.price = price;
-    }
-
-    public Item(int id, int buffHp, String name, int price){
-        this.id = id;
-        this.name = name;
-        this.upHp = buffHp;
-        this.price = price;
-    }
-
     public int getUpHp() {
         return upHp;
     }
